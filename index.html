@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Palm Story — เรื่องราวปาล์มน้ำมัน</title>
+<link href="https://fonts.googleapis.com/css2?family=Kanit:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+ --bg:#f3f9f3;
+--accent:#2e7d32;
+--accent-dark:#1b5e20;
+--muted:#5d6d55;
+--card:#f0faef; /* ✅ เขียวอ่อนกว่าเดิม */ /* ✅ เปลี่ยนพื้นหลังกล่องเป็นเขียวอ่อน */
+font-family: 'Kanit', sans-serif;
+
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  background:linear-gradient(180deg,var(--bg),#ffffff);
+  background-image:url('https://i.pinimg.com/originals/09/3c/8a/093c8a7d9c845de5a10ff79d2f6a60a9.png');
+  background-repeat:repeat;
+  background-attachment:fixed;
+  background-size:400px auto;
+  color:#222;
+  position:relative;
+  scroll-behavior:smooth;
+  overflow-x:hidden;
+}
+
+/* Floating palm animation */
+@keyframes sway{
+  0% {transform: translateY(0) rotate(0deg);}
+  50% {transform: translateY(-15px) rotate(3deg);}
+  100% {transform: translateY(0) rotate(0deg);}
+}
+.palm-bg{
+  position:fixed;
+  width:120px;
+  height:120px;
+  background-image:url('https://i.pinimg.com/originals/48/3d/02/483d02f7b2eae06e3ef3421ec1d6679f.png');
+  background-size:contain;
+  background-repeat:no-repeat;
+  opacity:0.12;
+  z-index:0;
+  animation:sway 6s ease-in-out infinite;
+}
+
+/* Position multiple palms */
+.palm1{top:20%;left:5%; animation-delay:0s;}
+.palm2{top:40%;left:80%; animation-delay:2s; transform:scale(0.8);}
+.palm3{top:70%;left:20%; animation-delay:4s; transform:scale(1.2);}
+.palm4{top:60%;left:60%; animation-delay:1s; transform:scale(0.9);}
+
+.container{
+  max-width:1100px;margin:0 auto;padding:32px;
+  position:relative;
+  z-index:1;
+}
+
+/* Topbar */
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:14px 0;position:relative;z-index:2}
+.brand{display:flex;gap:12px;align-items:center}
+.logo{width:54px;height:54px;border-radius:12px;background:linear-gradient(135deg,#a7e57a,#2e7d32);display:grid;place-items:center;box-shadow:0 6px 18px rgba(46,125,50,0.12)}
+.logo svg{width:36px;height:36px}
+.brand h1{margin:0;font-size:18px;line-height:1;color:var(--accent-dark)}
+.brand p{margin:0;font-size:12px;color:var(--muted)}
+
+nav ul{list-style:none;margin:0;padding:0;display:flex;gap:14px;align-items:center}
+nav a{text-decoration:none;padding:8px 12px;border-radius:8px;color:var(--muted);font-weight:600}
+nav a.primary{background:var(--accent);color:#fff;box-shadow:0 6px 18px rgba(46,125,50,0.18)}
+nav a:hover{color:var(--accent-dark)}
+
+/* Hero */
+.hero{display:grid;grid-template-columns:1fr 420px;gap:28px;align-items:center;margin-top:18px;position:relative;z-index:2}
+.hero-card{
+  background:linear-gradient(180deg,#e9f5ea 0%, #ffffff 100%);
+  padding:18px;
+  border-radius:16px;
+ color:var(--accent-dark); /* ข้อความในการ์ดเป็นสีเดียวกับหัวข้อ */
+  /* ⬇️ เงาชัดขึ้น + สองชั้นให้เป็นกรอบเด่นขึ้น */
+  box-shadow:
+    0 4px 10px rgba(0,0,0,0.10),      /* เงารอบบาง ๆ */
+    0 10px 28px rgba(0,0,0,0.18);     /* เงาหลักเข้มขึ้น */
+
+  border:1px solid rgba(0,0,0,0.06);   /* ขอบบางเพื่อให้เห็นเป็นกรอบ */
+  transition: all 0.3s ease;
+}
+
+.hero h2{margin:0 0 8px 0;font-size:28px;color:#1b5e20}
+.hero p{margin:0 0 16px;color:#3a563f}
+.cta {display:flex;gap:12px}
+.btn{padding:10px 16px;border-radius:10px;text-decoration:none;font-weight:700;transition: all 0.3s ease;}
+.btn-outline{border:2px solid var(--accent);color:var(--accent);background:transparent}
+.btn-outline:hover{background:var(--accent);color:#fff}
+.btn-fill{background:var(--accent);color:#fff;box-shadow:0 6px 18px rgba(46,125,50,0.18)}
+.btn-fill:hover{background:var(--accent-dark);box-shadow:0 8px 24px rgba(27,94,32,0.25)}
+
+.hero-visual{
+  border-radius:16px;
+  overflow:hidden;
+  box-shadow:0 14px 40px rgba(46,125,50,0.1);
+  background:linear-gradient(180deg,#eafbe8,#ffffff);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:22px;
+  transition: all 0.3s ease;
+}
+.hero-visual img{
+  width:100%;
+  height:auto;
+  border-radius:16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  object-fit:cover;
+  }
+  .hero-visual:hover video {
+  transform: scale(1.05) rotate(1deg);
+  box-shadow:0 20px 40px rgba(46,125,50,0.25);
+}
+
+
+/* Cards */
+section{margin-top:28px;position:relative;z-index:2}
+.cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.card{
+  background:linear-gradient(180deg,#e9f5ea 0%, #ffffff 100%);
+  padding:18px;
+  border-radius:16px;
+ color:var(--accent-dark); /* ข้อความในการ์ดเป็นสีเดียวกับหัวข้อ */
+  /* ⬇️ เงาแบบ 2 ชั้น ให้ดูเป็นกรอบรูปเด่นขึ้น */
+  box-shadow:
+    0 4px 10px rgba(0,0,0,0.10),      /* เงาระดับแรกบาง ๆ */
+    0 12px 28px rgba(0,0,0,0.18);     /* เงาหลักเข้มขึ้น */
+
+  border:1px solid rgba(0,0,0,0.06);   /* ขอบบางเพื่อเพิ่มความเป็นกรอบ */
+  transition: all 0.3s ease;
+}
+
+
+.card:hover{
+  transform:translateY(-6px);
+  box-shadow:0 16px 40px rgba(46,125,50,0.25);
+}
+.card h3{margin:0 0 10px 0}
+.card p{margin:0;color:var(--muted);font-size:14px}
+
+/* ปรับขนาดรูปพันธุ์ปาล์มให้เล็กลง */
+#varieties .card img {
+  width: 100%;
+  height: 180px; /* ลดจาก 220px */
+  object-fit: cover;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  transition: transform 0.3s ease;
+}
+#varieties .card img:hover {transform: scale(1.05);}
+
+/* Footer */
+footer{
+  margin-top:36px;padding:16px 0;color:var(--muted);font-size:14px;border-top:1px solid rgba(0,0,0,0.04);position:relative;z-index:2;
+}
+
+/* Back to Top Button */
+#backToTop{
+  position:fixed;
+  bottom:24px;
+  right:24px;
+  background:var(--accent);
+  color:#fff;
+  border:none;
+  border-radius:50%;
+  width:50px;
+  height:50px;
+  font-size:24px;
+  cursor:pointer;
+  box-shadow:0 6px 20px rgba(46,125,50,0.3);
+  display:none;
+  z-index:1000;
+  transition:all 0.3s ease;
+}
+#backToTop:hover{
+  background:var(--accent-dark);
+  transform:scale(1.1);
+}
+
+/* Responsive */
+@media (max-width:980px){
+  .hero{grid-template-columns:1fr;}
+  .cards{grid-template-columns:repeat(2,1fr)}
+}
+@media (max-width:640px){
+  nav ul{display:none}
+  .container{padding:16px}
+  .cards{grid-template-columns:1fr}
+}
+.hero-video {
+  position: relative;
+  height: 60vh;
+  overflow: hidden;
+}
+
+.hero-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-video .overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.3);
+}
+
+.hero-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  z-index: 10;
+}
+
+</style>
+</head>
+<body>
+
+<!-- Floating palms -->
+<div class="palm-bg palm1"></div>
+<div class="palm-bg palm2"></div>
+<div class="palm-bg palm3"></div>
+<div class="palm-bg palm4"></div>
+
+<div class="container">
+  <header class="topbar">
+    <div class="brand">
+      <div class="logo" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M2 21s7-8 20-9c0 0-6 4-8 7 0 0-4-2-12 2z" fill="#ffffff" opacity="0.12"/>
+          <path d="M6 18c3-2 6-6 11-8" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" opacity="0.8"/>
+          <path d="M12 3c0 1 2 4 4 5" stroke="#fff" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div>
+        <h1>Palm Story</h1>
+        <p>เรื่องราวของปาล์มน้ำมัน </p>
+      </div>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="index.html" class="primary">หน้าแรก</a></li>
+        <li><a href="#varieties"> พันธุ์ปาล์ม</a></li>
+        <li><a href="#contactweb"> ช่องทางติดต่อ</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="hero-card">
+        <h2>ยินดีต้อนรับสู่ Palm Story</h2>
+        <p>รวมเรื่องราวเกี่ยวกับปาล์มน้ำมัน: ความเป็นมา วิธีปลูก การแปรรูป และเรื่องเล่าจากชุมชนผู้ปลูก</p>
+        <div class="cta">
+          <a class="btn btn-fill" href="#about">เริ่มอ่าน</a>
+        </div>
+      </div>
+    <div class="hero-visual">
+  <video controls autoplay muted loop playsinline 
+       style="width:100%; height:auto; border-radius:16px; object-fit:cover;">
+ <source src="7898.mp4" type="video/mp4">
+</video>
+</div>
+    </section>
+
+    <section id="about">
+      <div class="cards">
+        <a href="history.html" style="text-decoration:none; color:inherit;">
+          <article class="card">
+            <h3>ประวัติ</h3>
+            <p>ปาล์มน้ำมันมีบทบาทสำคัญทั้งด้านเศรษฐกิจและสังคมของหลายพื้นที่...</p>
+          </article>
+        </a>
+        <a href="planting.html" style="text-decoration:none; color:inherit;">
+          <article class="card">
+            <h3>การปลูก</h3>
+            <p>แนวทางการเตรียมดิน การเลือกพันธุ์ และเทคนิคการดูแลรักษา เพื่อให้ได้ผลผลิตที่ดี</p>
+          </article>
+        </a>
+        <a href="processing.html" style="text-decoration:none; color:inherit;">
+          <article class="card">
+            <h3>แปรรูป</h3>
+            <p>จากผลสู่ผลิตภัณฑ์: การสกัดน้ำมัน และการแปรรูปอย่างยั่งยืน</p>
+          </article>
+        </a>
+      </div>
+    </section>
+
+    <section id="varieties">
+     <h2 style="color:var(--accent-dark)">พันธุ์และลักษณะเด่น</h2>
+      <p style="color:var(--accent-dark)">ตัวอย่างพันธุ์ปาล์มและข้อดี-ข้อควรระวังในการเลือกพันธุ์ให้เหมาะกับพื้นที่</p>
+      <div class="cards" style="margin-top:12px">
+        <a href="durra.html" style="text-decoration:none; color:inherit;">
+          <article class="card">
+            <img src="https://i.pinimg.com/1200x/bc/ab/85/bcab85ac30eee92d6cd5117967a75e36.jpg" alt="พันธุ์ดูรา" loading="lazy"/>
+            <h3>พันธุ์ดูรา</h3>
+            <p>ให้ผลผลิตเร็ว เหมาะกับดินร่วน แต่ต้องจัดการศัตรูพืชอย่างสม่ำเสมอ</p>
+          </article>
+        </a>
+        <a href="tenerea.html" style="text-decoration:none; color:inherit;">
+          <article class="card">
+            <img src="https://i.pinimg.com/1200x/0e/03/84/0e0384d126333443afa45185fcd7b430.jpg" alt="พันธุ์เทเนอรา" loading="lazy"/>
+            <h3>พันธุ์เทเนอรา</h3>
+            <p>ต้านทานโรคดี ทนแล้งปานกลาง เหมาะกับพื้นที่ภาคเหนือ</p>
+          </article>
+        </a>
+        <a href="pisifera.html" style="text-decoration:none; color:inherit;">
+          <article class="card">
+            <img src="https://www.cpi-th.com/public/moxieupload/%E0%B8%9E%E0%B8%B1%E0%B8%99%E0%B8%98%E0%B8%B8%E0%B9%8C%E0%B8%9B%E0%B8%B2%E0%B8%A5%E0%B9%8C%E0%B8%A1%E0%B8%99%E0%B9%89%E0%B8%B3%E0%B8%A1%E0%B8%B1%E0%B8%99%20CPI%20%20Pisifera.jpg" alt="พันธุ์พิสิเฟอร่า" loading="lazy"/>
+            <h3>พันธุ์พิสิเฟอร่า</h3>
+            <p>เน้นคุณภาพน้ำมันสูง เหมาะสำหรับผู้ประกอบการแปรรูป</p>
+          </article>
+        </a>
+      </div>
+    </section>
+
+    <section id="contactweb">
+       <h2 style="color:var(--accent-dark)">ช่องทางติดต่อ Palm Story</h2>
+      <p style="color:var(--accent-dark)">ติดต่อทีมงาน Palm Story ได้ผ่านช่องทางต่อไปนี้:</p>
+      <div class="cards" style="margin-top:12px">
+        <article class="card">
+          <h3>📧 อีเมล</h3>
+          <p><a href="mailto:palmstory.team@gmail.com" style="color:var(--accent)">palmstory.team@gmail.com</a></p>
+        </article>
+        <article class="card">
+          <h3>📞 เบอร์ติดต่อ</h3>
+          <p><a href="tel:0611237046" style="color:var(--accent)">061-123-7046</a></p>
+        </article>
+        <article class="card">
+          <h3>📱 เพจ Facebook</h3>
+          <p><a href="https://www.facebook.com/cpiagrotech?rdid=fpRGtEnsMpUeJqX0&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F1Kti62nNg9%2F#" target="_blank" style="color:var(--accent)">facebook.com/palmstory</a></p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div style="display:flex;flex-direction:column;gap:8px;align-items:center;text-align:center;color:var(--muted);font-size:14px">
+      <div><strong>Palm Story</strong> © 2025 Palm Story</div>
+    </div>
+  </footer>
+</div>
+
